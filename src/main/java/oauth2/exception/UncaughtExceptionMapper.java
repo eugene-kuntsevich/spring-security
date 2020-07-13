@@ -1,14 +1,12 @@
-package oauth2.github.endpoint.exception;
+package oauth2.exception;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Nikolay Bondarchuk

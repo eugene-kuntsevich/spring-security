@@ -3,10 +3,6 @@ package oauth2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author Nikolay Bondarchuk
- * @since 2020-04-04
- */
 @SpringBootApplication
 public class OAuth2Example {
 

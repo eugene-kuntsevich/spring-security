@@ -13,10 +13,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Collections.unmodifiableSet;
 
-/**
- * @author Nikolay Bondarchuk
- * @since 2020-04-05
- */
 public class MyOAuth2User implements OAuth2User, UserDetails
 {
 

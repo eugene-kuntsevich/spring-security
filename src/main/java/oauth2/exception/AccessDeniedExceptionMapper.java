@@ -1,4 +1,4 @@
-package oauth2.github.endpoint.exception;
+package oauth2.exception;
 
 import org.springframework.security.access.AccessDeniedException;
 

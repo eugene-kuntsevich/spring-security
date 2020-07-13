@@ -1,16 +1,12 @@
-package oauth2.github.service;
+package oauth2.service;
 
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import oauth2.github.model.User;
+import oauth2.model.User;
 
-/**
- * @author Nikolay Bondarchuk
- * @since 2020-04-05
- */
 public class UserServiceImpl implements UserService {
 
     private static final AtomicLong userIdCounter = new AtomicLong();

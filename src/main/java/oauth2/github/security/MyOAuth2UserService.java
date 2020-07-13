@@ -23,17 +23,13 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-import oauth2.github.model.User;
-import oauth2.github.service.UserService;
+import oauth2.model.User;
+import oauth2.service.UserService;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.collections4.MapUtils.emptyIfNull;
 
-/**
- * @author Nikolay Bondarchuk
- * @since 2020-04-05
- */
 public class MyOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User>
 {
 
@@ -120,9 +116,6 @@ public class MyOAuth2UserService implements OAuth2UserService<OAuth2UserRequest,
 			authorities.add(new SimpleGrantedAuthority("SCOPE_" + authority));
 		}
 
-		// ищем пользователя в нашей БД, либо создаем нового
-		// если пользователь не найден и система не подразумевает автоматической регистрации,
-		// необходимо сгенерировать тут исключение
 		User user = findOrCreate(userAttributes);
 		userAttributes.put(MyOAuth2User.ID_ATTR, user.getId());
 		return new MyOAuth2User(userNameAttributeName, userAttributes, authorities);

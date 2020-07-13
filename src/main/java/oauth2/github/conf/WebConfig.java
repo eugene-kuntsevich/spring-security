@@ -6,15 +6,11 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-import oauth2.github.endpoint.WelcomeEndpoint;
-import oauth2.github.endpoint.exception.AccessDeniedExceptionMapper;
-import oauth2.github.endpoint.exception.UncaughtExceptionMapper;
-import oauth2.github.endpoint.exception.WebApplicationExceptionMapper;
+import oauth2.web.AuthController;
+import oauth2.exception.AccessDeniedExceptionMapper;
+import oauth2.exception.UncaughtExceptionMapper;
+import oauth2.exception.WebApplicationExceptionMapper;
 
-/**
- * @author Nikolay Bondarchuk
- * @since 2020-04-04
- */
 @Configuration
 public class WebConfig extends ResourceConfig
 {
@@ -25,13 +21,13 @@ public class WebConfig extends ResourceConfig
         registerExceptionMappers();
     }
 
-    @Bean
-    public WelcomeEndpoint welcomeEndpoint() {
-        return new WelcomeEndpoint();
-    }
+/*    @Bean
+    public AuthController welcomeEndpoint() {
+        return new AuthController();
+    }*/
 
     private void registerEndpoints() {
-        register(WelcomeEndpoint.class);
+        register(AuthController.class);
     }
 
     private void registerExceptionMappers() {

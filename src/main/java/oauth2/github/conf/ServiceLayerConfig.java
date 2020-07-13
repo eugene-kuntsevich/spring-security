@@ -4,8 +4,8 @@ package oauth2.github.conf;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import oauth2.github.service.UserService;
-import oauth2.github.service.UserServiceImpl;
+import oauth2.service.UserService;
+import oauth2.service.UserServiceImpl;
 
 /**
  * @author Nikolay Bondarchuk

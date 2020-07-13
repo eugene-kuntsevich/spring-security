@@ -1,4 +1,4 @@
-package oauth2.github.endpoint.exception;
+package oauth2.exception;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
