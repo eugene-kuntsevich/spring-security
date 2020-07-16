@@ -15,11 +15,10 @@ import oauth2.service.UserService;
 @RequestMapping("/auth")
 public class AuthController
 {
-	@Autowired
 	private UserService userService;
 
 	@GetMapping("/github")
-	public String welcome()
+	public String authGithub()
 	{
 		User currentUser = getCurrentUser();
         return String.format("Welcome, %s! (user id: %s, user login: %s)",
@@ -28,16 +27,19 @@ public class AuthController
 
 	public User getCurrentUser()
 	{
-		return userService.findByLogin(getAuthenticatedUser().getName()).orElseThrow(() -> new RuntimeException("No user logged in."));
+		return userService.findByLogin(getAuthenticatedUserName()).orElseThrow(() -> new RuntimeException("No user logged in."));
 	}
 
-	private Authentication getAuthentication()
+	private String getAuthenticatedUserName()
 	{
-		return SecurityContextHolder.getContext().getAuthentication();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MyOAuth2User principal = (MyOAuth2User) authentication.getPrincipal();
+		return principal.getName();
 	}
 
-	private MyOAuth2User getAuthenticatedUser()
+	@Autowired
+	public void setUserService(UserService userService)
 	{
-		return (MyOAuth2User) getAuthentication().getPrincipal();
+		this.userService = userService;
 	}
 }

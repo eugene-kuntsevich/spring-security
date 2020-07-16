@@ -1,12 +1,17 @@
 package oauth2.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Table(name = "security_user")
 public class User
 {
-
 	private Long id;
 
 	private String login;
@@ -14,6 +19,8 @@ public class User
 	private String name;
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id")
 	public Long getId()
 	{
 		return id;
@@ -24,6 +31,7 @@ public class User
 		this.id = id;
 	}
 
+	@Column(name = "login")
 	public String getLogin()
 	{
 		return login;
@@ -34,6 +42,7 @@ public class User
 		this.login = login;
 	}
 
+	@Column(name = "name")
 	public String getName()
 	{
 		return name;

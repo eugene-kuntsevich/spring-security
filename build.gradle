@@ -18,8 +18,6 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.3.3.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-client
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.3.3.RELEASE'
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jersey
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '2.3.1.RELEASE'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
