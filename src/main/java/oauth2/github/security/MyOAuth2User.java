@@ -1,5 +1,6 @@
 package oauth2.github.security;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;

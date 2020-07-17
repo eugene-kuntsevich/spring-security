@@ -22,8 +22,14 @@ public class SecurityConfig
 	@Value("${client_secret}")
 	private String clientSecret;
 
+	@Value("${client_id_google}")
+	private String clientIdGoogle;
+
+	@Value("${client_secret_google}")
+	private String clientSecretGoogle;
+
 	@Bean
-	public ClientRegistration clientRegistration()
+	public ClientRegistration clientRegistrationGithub()
 	{
 		return ClientRegistration
 			.withRegistrationId("github")
@@ -35,6 +41,24 @@ public class SecurityConfig
 			.userInfoUri("https://api.github.com/user")
 			.tokenUri("https://github.com/login/oauth/access_token")
 			.authorizationUri("https://github.com/login/oauth/authorize")
+			.redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
+			.build();
+	}
+
+	@Bean
+	public ClientRegistration clientRegistrationGoogle()
+	{
+		return ClientRegistration
+			.withRegistrationId("google")
+			.clientId(clientIdGoogle)
+			.clientSecret(clientSecretGoogle)
+			.userNameAttributeName("login")
+			.clientAuthenticationMethod(BASIC)
+			.authorizationGrantType(AUTHORIZATION_CODE)
+			.userInfoUri("https://www.googleapis.com/userinfo/v2/me")
+			.tokenUri("https://www.googleapis.com/oauth2/v3/token")
+			.authorizationUri("https://accounts.google.com/o/oauth2/auth")
+			.scope("https://www.googleapis.com/auth/plus.login")
 			.redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
 			.build();
 	}

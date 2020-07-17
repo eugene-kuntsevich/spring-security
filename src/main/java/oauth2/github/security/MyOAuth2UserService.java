@@ -69,6 +69,11 @@ public class MyOAuth2UserService implements OAuth2UserService<OAuth2UserRequest,
 		String login = (String) userAttributes.get("login");
 		String username = (String) userAttributes.get("name");
 
+		if (login == null)
+		{
+			login = username;
+		}
+
 		Optional<User> userOpt = userService.findByLogin(login);
 		if (userOpt.isEmpty())
 		{

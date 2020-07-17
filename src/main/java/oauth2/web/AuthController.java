@@ -25,6 +25,14 @@ public class AuthController
 			currentUser.getName(), currentUser.getId(), currentUser.getLogin());
 	}
 
+	@GetMapping("/google")
+	public String authGoogle()
+	{
+		User currentUser = getCurrentUser();
+		return String.format("Welcome, %s! (user id: %s, user login: %s)",
+			currentUser.getName(), currentUser.getId(), currentUser.getLogin());
+	}
+
 	public User getCurrentUser()
 	{
 		return userService.findByLogin(getAuthenticatedUserName()).orElseThrow(() -> new RuntimeException("No user logged in."));
