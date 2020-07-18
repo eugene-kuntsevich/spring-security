@@ -1,20 +1,15 @@
 package oauth2.github.conf;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
 
 @Configuration
-public class SecurityConfig
+public class AuthProvidersConfig
 {
 	@Value("${client_id}")
 	private String clientId;
@@ -52,7 +47,7 @@ public class SecurityConfig
 			.withRegistrationId("google")
 			.clientId(clientIdGoogle)
 			.clientSecret(clientSecretGoogle)
-			.userNameAttributeName("login")
+			.userNameAttributeName("name")
 			.clientAuthenticationMethod(BASIC)
 			.authorizationGrantType(AUTHORIZATION_CODE)
 			.userInfoUri("https://www.googleapis.com/userinfo/v2/me")
@@ -61,12 +56,5 @@ public class SecurityConfig
 			.scope("https://www.googleapis.com/auth/plus.login")
 			.redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
 			.build();
-	}
-
-	@Bean
-	@Autowired
-	public ClientRegistrationRepository clientRegistrationRepository(List<ClientRegistration> registrations)
-	{
-		return new InMemoryClientRegistrationRepository(registrations);
 	}
 }

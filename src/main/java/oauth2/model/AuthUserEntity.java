@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "security_user")
-public class User
+public class AuthUserEntity
 {
 	private Long id;
 
