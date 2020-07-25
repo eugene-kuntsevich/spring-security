@@ -22,7 +22,7 @@ public class AuthProvidersConfig
 
 	@Value("${client_secret_google}")
 	private String clientSecretGoogle;
-
+////переделать конфиги, добавить провперти для авторизации
 	@Bean
 	public ClientRegistration clientRegistrationGithub()
 	{
