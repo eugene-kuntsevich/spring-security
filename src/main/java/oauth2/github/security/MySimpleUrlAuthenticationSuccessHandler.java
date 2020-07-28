@@ -2,6 +2,7 @@ package oauth2.github.security;
 
 import java.io.IOException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,12 +29,14 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 	protected void handle(HttpServletRequest request, HttpServletResponse response)
 		throws IOException
 	{
-		String targetUrl = "http://localhost:4200/cabinet";
+		String targetUrl = "http://localhost:4300/cabinet";
 		if (response.isCommitted())
 		{
 			return;
 		}
-		response.setHeader("token", "13j123opij124op");
+		Cookie cookie = new Cookie("my_super_cookie", "cook_value");
+		cookie.setPath("/");
+		response.addCookie(cookie);
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
