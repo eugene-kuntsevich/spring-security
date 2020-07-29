@@ -48,6 +48,7 @@ public class OAuth2UserDetailsService implements OAuth2UserService<OAuth2UserReq
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException
 	{
+		//удалить этот рестТемплейт
 		ResponseEntity<Map<String, Object>> response =
 			restOperations.exchange(Objects.requireNonNull(requestEntityConverter.convert(userRequest)), new ParameterizedTypeReference<java.util.Map<String, Object>>()
 			{

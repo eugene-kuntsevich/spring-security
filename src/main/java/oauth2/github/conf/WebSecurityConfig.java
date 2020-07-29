@@ -16,23 +16,30 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import oauth2.github.security.HandlerInterceptorImpl;
 import oauth2.github.security.MyAuthenticationProvider;
 import oauth2.github.security.MySimpleUrlAuthenticationSuccessHandler;
 import oauth2.github.security.OAuth2UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer
 {
 	private final OAuth2UserDetailsService userService;
 	private final MyAuthenticationProvider myAuthenticationProvider;
+	private final HandlerInterceptorAdapter handlerInterceptorAdapter;
 
 	@Autowired
-	public WebSecurityConfig(OAuth2UserDetailsService userService, MyAuthenticationProvider myAuthenticationProvider)
+	public WebSecurityConfig(OAuth2UserDetailsService userService, MyAuthenticationProvider myAuthenticationProvider,
+		HandlerInterceptorAdapter handlerInterceptorAdapter)
 	{
 		this.userService = userService;
 		this.myAuthenticationProvider = myAuthenticationProvider;
+		this.handlerInterceptorAdapter = handlerInterceptorAdapter;
 	}
 
 	@Override
@@ -41,7 +48,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		http.authorizeRequests().anyRequest().authenticated().and().authenticationProvider(myAuthenticationProvider).formLogin()
 			.successHandler(myAuthenticationSuccessHandler()).and().cors().and().
 			oauth2Login(oauth2Login -> oauth2Login.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(userService))
-                .successHandler(myAuthenticationSuccessHandler()));
+				.successHandler(myAuthenticationSuccessHandler()));
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry)
+	{
+		registry.addInterceptor(new HandlerInterceptorImpl());
 	}
 
 	@Bean
