@@ -1,4 +1,4 @@
-package oauth2.github.conf;
+package oauth2.conf;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,28 +18,23 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import oauth2.github.security.HandlerInterceptorImpl;
-import oauth2.github.security.MyAuthenticationProvider;
-import oauth2.github.security.MySimpleUrlAuthenticationSuccessHandler;
-import oauth2.github.security.OAuth2UserDetailsService;
+import oauth2.security.HandlerInterceptorImpl;
+import oauth2.security.AuthSuccessHandler;
+import oauth2.security.OAuth2UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer
 {
 	private final OAuth2UserDetailsService userService;
-	private final MyAuthenticationProvider myAuthenticationProvider;
-	private final HandlerInterceptorAdapter handlerInterceptorAdapter;
+	private final BaseAuthenticationProvider myAuthenticationProvider;
 
 	@Autowired
-	public WebSecurityConfig(OAuth2UserDetailsService userService, MyAuthenticationProvider myAuthenticationProvider,
-		HandlerInterceptorAdapter handlerInterceptorAdapter)
+	public WebSecurityConfig(OAuth2UserDetailsService userService, BaseAuthenticationProvider myAuthenticationProvider)
 	{
 		this.userService = userService;
 		this.myAuthenticationProvider = myAuthenticationProvider;
-		this.handlerInterceptorAdapter = handlerInterceptorAdapter;
 	}
 
 	@Override
@@ -60,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 	@Bean
 	public AuthenticationSuccessHandler myAuthenticationSuccessHandler()
 	{
-		return new MySimpleUrlAuthenticationSuccessHandler();
+		return new AuthSuccessHandler();
 	}
 
 	@Bean
@@ -68,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 	{
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:4300"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

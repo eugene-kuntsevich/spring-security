@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import oauth2.github.security.OAuth2UserDetails;
+import oauth2.model.UserDetailsImpl;
 
-import static oauth2.github.security.OAuth2UserDetailsService.getInstanceUserDetailsManager;
+import static oauth2.security.OAuth2UserDetailsService.getInstanceUserDetailsManager;
 
 @RestController
 @RequestMapping("/auth")
@@ -38,7 +38,7 @@ public class AuthController
 	private String getAuthenticatedUserName()
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		OAuth2UserDetails principal = (OAuth2UserDetails) authentication.getPrincipal();
+		UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
 		return principal.getName();
 	}
 

@@ -1,4 +1,4 @@
-package oauth2.github.security;
+package oauth2.security;
 
 import java.io.IOException;
 
@@ -13,21 +13,19 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler
+public class AuthSuccessHandler implements AuthenticationSuccessHandler
 {
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request,
-		HttpServletResponse response, Authentication authentication)
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 		throws IOException
 	{
 		handle(request, response);
 		clearAuthenticationAttributes(request);
 	}
 
-	protected void handle(HttpServletRequest request, HttpServletResponse response)
-		throws IOException
+	protected void handle(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String targetUrl = "http://localhost:4300/cabinet";
 		if (response.isCommitted())
@@ -48,15 +46,5 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 			return;
 		}
 		session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-	}
-
-	public void setRedirectStrategy(RedirectStrategy redirectStrategy)
-	{
-		this.redirectStrategy = redirectStrategy;
-	}
-
-	protected RedirectStrategy getRedirectStrategy()
-	{
-		return redirectStrategy;
 	}
 }

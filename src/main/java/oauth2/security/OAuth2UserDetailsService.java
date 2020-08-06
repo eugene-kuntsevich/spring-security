@@ -1,4 +1,4 @@
-package oauth2.github.security;
+package oauth2.security;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -10,8 +10,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequestEntityConverter;
@@ -23,6 +21,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
+
+import oauth2.model.UserDetailsImpl;
 
 import static org.apache.commons.collections4.MapUtils.emptyIfNull;
 
@@ -60,7 +60,7 @@ public class OAuth2UserDetailsService implements OAuth2UserService<OAuth2UserReq
 		authorities.add(new OAuth2UserAuthority("USER", userAttributes));
 		findOrCreate(userAttributes);
 		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-		return new OAuth2UserDetails(userNameAttributeName, userAttributes, authorities);
+		return new UserDetailsImpl(userNameAttributeName, userAttributes, authorities);
 	}
 
 	private void findOrCreate(Map<String, Object> userAttributes)
@@ -75,7 +75,10 @@ public class OAuth2UserDetailsService implements OAuth2UserService<OAuth2UserReq
 
 		if (!userDetailsManager.userExists(login))
 		{
-			userDetailsManager.createUser(User.withDefaultPasswordEncoder().username(login).password("").roles("USER").build());
+			//заменить дефолт энкодер
+			userDetailsManager.createUser(new UserDetailsImpl(null, null, null)/*User.withDefaultPasswordEncoder().username
+			(login).password("").roles("USER")
+			.build()*/);
 		}
 	}
 

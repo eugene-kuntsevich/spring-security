@@ -1,8 +1,6 @@
-package oauth2.github.security;
+package oauth2.conf;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,19 +9,27 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-@Component
-public class MyAuthenticationProvider implements AuthenticationProvider, Serializable
-{
+import oauth2.security.Roles;
 
-	private static List<GrantedAuthority> AUTHORITIES = new ArrayList<>(1)
-	{{
-		add((GrantedAuthority) () -> "ROLE_USER");
-	}};
+import static java.util.Collections.singletonList;
+
+@Component
+public class BaseAuthenticationProvider implements AuthenticationProvider, Serializable
+{
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException
 	{
-		return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), AUTHORITIES);
+		UsernamePasswordAuthenticationToken authenticationToken =
+			new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), singletonList(new GrantedAuthority()
+			{
+				@Override
+				public String getAuthority()
+				{
+					return Roles.USER.toString();
+				}
+			}));
+		return authenticationToken;
 	}
 
 	@Override

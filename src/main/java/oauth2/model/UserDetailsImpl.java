@@ -1,4 +1,4 @@
-package oauth2.github.security;
+package oauth2.model;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-public class OAuth2UserDetails implements OAuth2User, UserDetails
+public class UserDetailsImpl implements OAuth2User, UserDetails
 {
 	private final String nameAttributeKey;
 
@@ -17,7 +17,7 @@ public class OAuth2UserDetails implements OAuth2User, UserDetails
 
 	private final Set<GrantedAuthority> authorities;
 
-	public OAuth2UserDetails(String nameAttributeKey, Map<String, Object> attributes, Collection<GrantedAuthority> authorities)
+	public UserDetailsImpl(String nameAttributeKey, Map<String, Object> attributes, Collection<GrantedAuthority> authorities)
 	{
 		this.nameAttributeKey = nameAttributeKey;
 		this.attributes = attributes;

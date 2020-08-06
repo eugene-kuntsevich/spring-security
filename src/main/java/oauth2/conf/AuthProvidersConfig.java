@@ -1,4 +1,4 @@
-package oauth2.github.conf;
+package oauth2.conf;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
